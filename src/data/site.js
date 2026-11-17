@@ -32,8 +32,10 @@ export const site = {
 
 export const nav = [
   { label: 'Modules', href: '#modules' },
+  { label: 'Mobile Apps', href: '#mobile-apps' },
   { label: 'Screenshots', href: '#screenshots' },
   { label: 'Why 1 Click', href: '#why' },
+  { label: 'Pricing', href: '#pricing' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -268,4 +270,239 @@ export const benefits = [
   { icon: 'layout', title: 'A clear daily overview', tone: 'orange', text: 'The dashboard brings enrollment, fees, attendance and notices onto a single screen.' },
   { icon: 'search', title: 'Find records quickly', tone: 'pink', text: 'Search students, staff, admissions, bills and reports from one search bar.' },
   { icon: 'download', title: 'Export and print lists', tone: 'green', text: 'Copy, Excel, CSV, PDF and print options are available on list screens.' },
+]
+
+/**
+ * 4 Dedicated Mobile Applications
+ * Order: Parent App | Chairman App | Student App | Teacher App
+ * Note: Screenshots should be placed in src/assets/screens/ when final builds are ready.
+ */
+export const mobileApps = [
+  {
+    id: 'parent',
+    name: 'Parent App',
+    shortName: 'Parent',
+    target: 'For Parents & Guardians',
+    badge: 'Connected Families',
+    tone: 'purple',
+    icon: 'heart',
+    purpose: "Help parents stay connected with their children's school.",
+    description: 'Keep parents actively informed with instant daily attendance, fee voucher tracking, homework updates, and official school circulars.',
+    benefits: [
+      'Instant daily attendance alerts (present, absent, late, or leave)',
+      'Fee invoices, payment status, and digital receipts',
+      'Daily homework assignments and teacher remarks',
+      'School announcements, calendar, and urgent event notices',
+    ],
+    verifiedCapabilities: [
+      'Daily student attendance overview with status breakdown',
+      'Billed, paid, and outstanding fee balance tracking',
+      'Homework tracker with subject details and submission dates',
+      'School-wide notice board for circulars and meeting schedules',
+      'Multi-child profile switching for parents with several enrolled students',
+    ],
+    availability: 'Available on iOS & Android for institutions subscribed to 1 Click Solution.',
+    image: null, // Will use high-fidelity UI preview until dedicated production screenshot is dropped in
+  },
+  {
+    id: 'chairman',
+    name: 'Chairman App',
+    shortName: 'Chairman',
+    target: 'For Owners, Chairmen & Trustees',
+    badge: 'Executive Oversight',
+    tone: 'amber',
+    icon: 'crown',
+    purpose: 'Help school leadership monitor institutional operations.',
+    description: 'Provide executive leadership with real-time institutional dashboards, multi-campus KPIs, and financial summaries on the go.',
+    benefits: [
+      'Executive KPI dashboard across single or multiple campuses',
+      'Real-time fee collection, outstanding balance, and expense tracking',
+      'Institutional student and staff attendance headcount at a glance',
+      'Enrolment trends, capacity analysis, and decision-making reports',
+    ],
+    verifiedCapabilities: [
+      'Consolidated management dashboard with live operational totals',
+      'Multi-branch performance comparison and enrollment metrics',
+      'Fee collection trajectory vs. monthly operational targets',
+      'Staff presence, leave count, and teacher allocation ratios',
+      'Strategic reporting on institutional growth and capacity',
+    ],
+    availability: 'Available on iOS & Android for institutional leadership.',
+    image: null,
+  },
+  {
+    id: 'student',
+    name: 'Student App',
+    shortName: 'Student',
+    target: 'For Enrolled Students',
+    badge: 'Academic Hub',
+    tone: 'blue',
+    icon: 'graduationCap',
+    purpose: 'Provide students with convenient access to their academic information.',
+    description: 'Give students a convenient, focused academic portal to view daily class timetables, homework assignments, attendance, and school news.',
+    benefits: [
+      'Daily class timetables, room assignments, and period schedules',
+      'Subject-wise homework tasks with clear submission deadlines',
+      'Personal daily attendance logs and academic attendance rate',
+      'School circulars, event updates, and holiday calendar',
+    ],
+    verifiedCapabilities: [
+      'Interactive day and week timetable with current period indicator',
+      'Organised homework queue by subject with pending status',
+      'Personal attendance record (present, late, absent history)',
+      'School-wide and section-specific circulars and notices',
+      'Academic calendar for events, deadlines, and scheduled exams',
+    ],
+    availability: 'Available on iOS & Android for enrolled students.',
+    image: null,
+  },
+  {
+    id: 'teacher',
+    name: 'Teacher App',
+    shortName: 'Teacher',
+    target: 'For Academic Faculty & Staff',
+    badge: 'Classroom Assistant',
+    tone: 'green',
+    icon: 'bookOpen',
+    purpose: 'Support teachers in managing academic activities.',
+    description: 'Empower teaching staff to mark rapid class attendance, dispatch homework assignments, and access class rosters directly from their phones.',
+    benefits: [
+      'Fast 1-tap student attendance marking for assigned sections',
+      'Digital homework assignment creation and instruction broadcast',
+      'Immediate access to assigned classes, subjects, and student rosters',
+      'Direct communication channel with administrative leadership',
+    ],
+    verifiedCapabilities: [
+      'Class-wise student attendance entry (Present, Absent, Late, Leave)',
+      'Homework publishing with subject selection and instructions',
+      'Teacher schedule and timetable view for the academic day',
+      'Student profile reference and contact access for class teachers',
+      'Internal staff circulars and administrative alerts',
+    ],
+    availability: 'Available on iOS & Android for authorized teaching faculty.',
+    image: null,
+  },
+]
+
+/**
+ * Pricing Plans (Provisional)
+ * Note: Actual pricing is prepared custom per institution.
+ * We present a transparent, quote-based model without inventing fictional numbers.
+ */
+export const pricingPlans = [
+  {
+    id: 'starter',
+    name: 'Starter',
+    badge: 'Provisional Plan',
+    audience: 'Single-campus schools & growing academies',
+    description: 'Essential digital foundation to organize admissions, student records, daily attendance, and fee tracking on a single campus.',
+    priceLabel: 'Custom Quote',
+    priceSubtext: 'Tailored to your student body and setup requirements',
+    highlighted: false,
+    ctaText: 'Request a Quote',
+    features: [
+      { text: 'Admission inquiry & registration management', included: true },
+      { text: 'Student profiles & record keeping', included: true },
+      { text: 'Daily attendance tracking (students & staff)', included: true },
+      { text: 'Fee voucher generation & collection records', included: true },
+      { text: 'Academic calendar, events & meeting scheduling', included: true },
+      { text: 'Standard Web CMS portal for administration', included: true },
+      { text: 'Export student & staff lists (Excel / CSV)', included: true },
+      { text: 'Multi-campus branch switching', included: false, note: 'Available in Professional' },
+      { text: 'Dedicated 4-App Mobile Suite', included: false, note: 'Available in Professional' },
+    ],
+  },
+  {
+    id: 'professional',
+    name: 'Professional',
+    badge: 'Provisional Plan',
+    tag: 'Full Platform Suite',
+    audience: 'Established schools & multi-branch institutions',
+    description: 'Complete operational control with multi-campus management, comprehensive financial reporting, and the complete 4-app mobile suite.',
+    priceLabel: 'Custom Quote',
+    priceSubtext: 'Structured according to campus count and mobile user access',
+    highlighted: true,
+    ctaText: 'Request a Quote',
+    features: [
+      { text: 'All capabilities included in Starter', included: true },
+      { text: 'Multi-campus & branch management', included: true },
+      { text: 'Class & section capacity with reserved seats', included: true },
+      { text: 'Finance reports, yearly expenses & collection trends', included: true },
+      { text: 'Notice board & internal communications', included: true },
+      { text: 'Complaints queue & visitor tracking', included: true },
+      { text: 'Complete 4-App Mobile Suite (Parent, Chairman, Student, Teacher)', included: true },
+      { text: 'Full export options (Excel, CSV, PDF & Print)', included: true },
+      { text: 'Guided institutional onboarding & setup assistance', included: true },
+    ],
+  },
+  {
+    id: 'enterprise',
+    name: 'Enterprise',
+    badge: 'Provisional Plan',
+    tag: 'Custom Deployment',
+    audience: 'Large school networks, trusts & colleges',
+    description: 'Tailored institutional deployment with priority SLA, custom role permissions, consolidated group reporting, and migration services.',
+    priceLabel: 'Custom Quote',
+    priceSubtext: 'Bespoke institutional agreement with priority deployment',
+    highlighted: false,
+    ctaText: 'Request a Quote',
+    features: [
+      { text: 'All capabilities included in Professional', included: true },
+      { text: 'Unlimited connected campuses & academic branches', included: true },
+      { text: 'Consolidated executive reporting for trustees & leadership', included: true },
+      { text: 'Custom user roles, access control & permission policies', included: true },
+      { text: 'Legacy data migration & database onboarding assistance', included: true },
+      { text: 'Dedicated account representative & priority support SLA', included: true },
+      { text: 'Tailored institutional workflow configurations', included: true },
+    ],
+  },
+]
+
+export const pricingComparison = [
+  {
+    category: 'Core Administration',
+    items: [
+      { name: 'Admission & Inquiry Tracking', starter: true, professional: true, enterprise: true },
+      { name: 'Student Records & Demographics', starter: true, professional: true, enterprise: true },
+      { name: 'Staff & Teacher Directory', starter: true, professional: true, enterprise: true },
+      { name: 'Daily Student & Staff Attendance', starter: true, professional: true, enterprise: true },
+      { name: 'Student Withdrawal Process', starter: true, professional: true, enterprise: true },
+    ],
+  },
+  {
+    category: 'Academics & Operations',
+    items: [
+      { name: 'Academic Calendar & Schedule', starter: true, professional: true, enterprise: true },
+      { name: 'Class & Section Capacity Management', starter: false, professional: true, enterprise: true },
+      { name: 'Complaints & Visitor Management', starter: false, professional: true, enterprise: true },
+      { name: 'Notice Board Broadcasts', starter: 'Basic', professional: true, enterprise: true },
+    ],
+  },
+  {
+    category: 'Finance & Analytics',
+    items: [
+      { name: 'Fee Vouchers & Collection Tracking', starter: true, professional: true, enterprise: true },
+      { name: 'Expense Tracking & Finance Reports', starter: false, professional: true, enterprise: true },
+      { name: 'Cross-Campus Executive Analytics', starter: false, professional: true, enterprise: true },
+      { name: 'Data Export (Excel, CSV, PDF, Print)', starter: 'Excel/CSV', professional: 'Full Suite', enterprise: 'Full Suite' },
+    ],
+  },
+  {
+    category: 'Mobile Applications Suite',
+    items: [
+      { name: 'Parent Mobile App', starter: false, professional: true, enterprise: true },
+      { name: 'Chairman Executive Mobile App', starter: false, professional: true, enterprise: true },
+      { name: 'Student Mobile App', starter: false, professional: true, enterprise: true },
+      { name: 'Teacher Classroom Mobile App', starter: false, professional: true, enterprise: true },
+    ],
+  },
+  {
+    category: 'Deployment & Support',
+    items: [
+      { name: 'Multi-Campus Architecture', starter: 'Single Campus', professional: 'Multi-Campus', enterprise: 'Unlimited' },
+      { name: 'User Roles & Access Permissions', starter: 'Standard', professional: 'Standard', enterprise: 'Custom Roles' },
+      { name: 'Data Migration Assistance', starter: 'Self-serve', professional: 'Guided', enterprise: 'Dedicated Team' },
+      { name: 'Institutional Support', starter: 'Standard', professional: 'Priority', enterprise: 'Dedicated SLA' },
+    ],
+  },
 ]

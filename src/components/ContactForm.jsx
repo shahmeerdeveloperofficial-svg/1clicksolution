@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { site } from '../data/site.js'
 import { Icon } from './Icons.jsx'
 import Reveal from './Reveal.jsx'
@@ -9,9 +9,18 @@ const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT
 
 const empty = { name: '', institution: '', email: '', phone: '', message: '', website: '' }
 
-export default function ContactForm() {
+export default function ContactForm({ selectedPlan, onClearPlan }) {
   const [values, setValues] = useState(empty)
   const [status, setStatus] = useState({ state: 'idle', text: '' })
+
+  useEffect(() => {
+    if (selectedPlan && !values.message) {
+      setValues((v) => ({
+        ...v,
+        message: `I would like to request information and a custom quote for the ${selectedPlan} for our institution.`,
+      }))
+    }
+  }, [selectedPlan])
 
   const update = (e) => setValues((v) => ({ ...v, [e.target.name]: e.target.value }))
 
@@ -30,6 +39,9 @@ export default function ContactForm() {
     setStatus({ state: 'sending', text: 'Sending your message…' })
     try {
       const { website, ...payload } = values
+      if (selectedPlan) {
+        payload.selectedPlan = selectedPlan
+      }
       const res = await fetch(ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -37,6 +49,7 @@ export default function ContactForm() {
       })
       if (!res.ok) throw new Error(`Request failed (${res.status})`)
       setValues(empty)
+      if (onClearPlan) onClearPlan()
       setStatus({ state: 'success', text: 'Thank you. We have received your message and will get back to you soon.' })
     } catch {
       setStatus({
@@ -69,6 +82,25 @@ export default function ContactForm() {
         </Reveal>
 
         <Reveal className="contact-card">
+          {selectedPlan && (
+            <div className="selected-plan-pill">
+              <span className="selected-plan-label">
+                <Icon name="checkCircle" size={15} />
+                Selected Package / Interest: <strong>{selectedPlan}</strong>
+              </span>
+              {onClearPlan && (
+                <button
+                  type="button"
+                  className="selected-plan-clear"
+                  onClick={onClearPlan}
+                  aria-label="Clear selected plan"
+                >
+                  <Icon name="close" size={14} />
+                </button>
+              )}
+            </div>
+          )}
+
           <form onSubmit={onSubmit} noValidate={false} aria-describedby="form-status">
             <div className="field-row">
               <div className="field">

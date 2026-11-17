@@ -27,6 +27,16 @@ const paths = {
   layout: (<><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></>),
   search: (<><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></>),
   download: (<><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></>),
+  smartphone: (<><rect width="14" height="20" x="5" y="2" rx="3" ry="3" /><path d="M12 18h.01" /></>),
+  crown: (<><path d="m2 5 3.5 10h13L22 5l-5 6-5-7-5 7-5-6z" /><path d="M4 19h16" /></>),
+  heart: (<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />),
+  chevronDown: (<path d="m6 9 6 6 6-6" />),
+  chevronUp: (<path d="m18 15-6-6-6 6" />),
+  sparkles: (<><path d="m12 3 1.8 4.5L18 9.3l-3.6 3.3.9 4.9-4.3-2.5-4.3 2.5.9-4.9-3.6-3.3 4.2-1.8L12 3z" /></>),
+  info: (<><circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" /></>),
+  checkCircle: (<><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></>),
+  minus: (<path d="M5 12h14" />),
+  externalLink: (<><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" /></>),
 }
 
 export function Icon({ name, size = 20, className = '' }) {
@@ -49,15 +59,16 @@ export function Icon({ name, size = 20, className = '' }) {
   )
 }
 
-export function Logo({ light = false }) {
+import logoImg from '../assets/logo.png'
+
+export function Logo({ light = false, showTagline = true }) {
   return (
     <span className={`logo${light ? ' logo--light' : ''}`}>
-      <svg className="logo-mark" viewBox="0 0 32 32" aria-hidden="true">
-        <rect width="32" height="32" rx="8" fill="#2450e6" />
-        <path d="M13.2 9.5 17 8v16" fill="none" stroke="#fff" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="23" cy="9" r="2.2" fill="#a78bfa" />
-      </svg>
-      <span className="logo-text">1 Click Solution</span>
+      <img src={logoImg} alt="1 Click Solution Logo" className="logo-img" width="44" height="44" />
+      <span className="logo-text-block">
+        <span className="logo-text">1 Click Solution</span>
+        {showTagline && <span className="logo-tagline">Road to Technology</span>}
+      </span>
     </span>
   )
 }
