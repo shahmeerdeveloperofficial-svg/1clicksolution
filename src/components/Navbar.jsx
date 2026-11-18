@@ -12,7 +12,6 @@ export default function Navbar({ lang = 'en', onLangChange }) {
   const t = translations[lang]?.nav || translations.en.nav
 
   const navLabels = {
-    '#overview': t.overview,
     '#solution': t.modules,
     '#workflow': t.howItWorks,
     '#mobile-apps': t.mobileApps,

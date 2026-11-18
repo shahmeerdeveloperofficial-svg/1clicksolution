@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { heroImages } from '../data/site.js'
 import { Icon } from './Icons.jsx'
 
-export function DeviceMockup({ onOpenVideoModal }) {
+export function DeviceMockup() {
   const wrap = useRef(null)
 
   useEffect(() => {
@@ -190,7 +190,7 @@ export function DeviceMockup({ onOpenVideoModal }) {
 
 import { translations } from '../data/translations.js'
 
-export default function Hero({ lang = 'en', onOpenVideoModal }) {
+export default function Hero({ lang = 'en' }) {
   const t = translations[lang]?.hero || translations.en.hero
   return (
     <section className="hero hero--3d" id="top">
@@ -224,16 +224,15 @@ export default function Hero({ lang = 'en', onOpenVideoModal }) {
                 <Icon name="arrowRight" size={18} />
               </a>
 
-              <button
-                type="button"
+              <a
+                href="#solution"
                 className="btn btn--hero-video"
-                onClick={onOpenVideoModal}
               >
                 <span className="hero-play-circle" aria-hidden="true">
-                  <Icon name="play" size={16} />
+                  <Icon name="layout" size={16} />
                 </span>
-                {t.watchVideo}
-              </button>
+                {t.exploreModules}
+              </a>
             </div>
 
             {/* 3 Trust Badges Strip matching Reference Image */}
@@ -272,7 +271,7 @@ export default function Hero({ lang = 'en', onOpenVideoModal }) {
 
           {/* Right Column: 3D Stage Visual */}
           <div className="hero-stage-side">
-            <DeviceMockup onOpenVideoModal={onOpenVideoModal} />
+            <DeviceMockup />
           </div>
         </div>
       </div>

@@ -31,7 +31,6 @@ export const site = {
 }
 
 export const nav = [
-  { label: 'Overview', href: '#overview' },
   { label: 'Modules', href: '#solution' },
   { label: 'How It Works', href: '#workflow' },
   { label: 'Mobile Apps', href: '#mobile-apps' },
