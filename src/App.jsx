@@ -15,6 +15,7 @@ import ContactForm from './components/ContactForm.jsx'
 import Footer from './components/Footer.jsx'
 
 export default function App() {
+  const [lang, setLang] = useState('en')
   const [selectedPlan, setSelectedPlan] = useState(null)
   const [videoModalOpen, setVideoModalOpen] = useState(false)
   const [activeModuleId, setActiveModuleId] = useState('dashboard')
@@ -32,23 +33,35 @@ export default function App() {
   }
 
   return (
-    <>
+    <div className={`app-root lang-${lang}`}>
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <Navbar onOpenVideoModal={() => setVideoModalOpen(true)} />
+      <Navbar
+        lang={lang}
+        onLangChange={setLang}
+        onOpenVideoModal={() => setVideoModalOpen(true)}
+      />
       <main id="main">
         {/* Section 1: 3D Dark Navy Hero */}
-        <Hero onOpenVideoModal={() => setVideoModalOpen(true)} />
+        <Hero
+          lang={lang}
+          onOpenVideoModal={() => setVideoModalOpen(true)}
+        />
 
-        {/* Section 2: Product Overview & Cinematic Video Card */}
-        <ProductVideo onOpenModal={() => setVideoModalOpen(true)} />
+        {/* Section 2: Product Overview & Cinematic 3D Video Walkthrough */}
+        <ProductVideo
+          lang={lang}
+          onOpenModal={() => setVideoModalOpen(true)}
+          onSelectDemo={() => handleSelectPlan('Demo Request from Video')}
+        />
 
         {/* Section 3: Module Quick Bar */}
         <ModuleStrip onSelectModule={handleSelectModule} />
 
         {/* Section 4: "Our Solution" Complete School Management in One Platform */}
         <SoftwareShowcase
+          lang={lang}
           activeModuleId={activeModuleId}
           onSelectModule={handleSelectModule}
         />
@@ -89,6 +102,6 @@ export default function App() {
         onClose={() => setVideoModalOpen(false)}
         onSelectDemo={() => handleSelectPlan('Live Demo Request')}
       />
-    </>
+    </div>
   )
 }

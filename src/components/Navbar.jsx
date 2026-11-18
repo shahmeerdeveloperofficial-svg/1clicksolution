@@ -1,11 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
 import { nav } from '../data/site.js'
 import { Icon, Logo } from './Icons.jsx'
+import Translator from './Translator.jsx'
+import { translations } from '../data/translations.js'
 
-export default function Navbar() {
+export default function Navbar({ lang = 'en', onLangChange }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const bar = useRef(null)
+
+  const t = translations[lang]?.nav || translations.en.nav
+
+  const navLabels = {
+    '#overview': t.overview,
+    '#solution': t.modules,
+    '#workflow': t.howItWorks,
+    '#mobile-apps': t.mobileApps,
+    '#screenshots': t.screenshots,
+    '#pricing': t.pricing,
+    '#contact': t.contact,
+  }
 
   useEffect(() => {
     let raf = 0
@@ -43,17 +57,22 @@ export default function Navbar() {
         <nav aria-label="Primary" className={`navbar-links${open ? ' is-open' : ''}`} id="primary-nav">
           {nav.map((item) => (
             <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
-              {item.label}
+              {navLabels[item.href] || item.label}
             </a>
           ))}
           <a href="#demo" className="btn btn--primary btn--sm navbar-cta-mobile" onClick={() => setOpen(false)}>
-            Request Demo &rarr;
+            {t.requestDemo}
           </a>
         </nav>
 
-        <a href="#demo" className="btn btn--primary btn--sm navbar-cta">
-          Request Demo &rarr;
-        </a>
+        <div className="navbar-actions">
+          {/* Multi-language Translator Switcher */}
+          <Translator currentLang={lang} onLangChange={onLangChange} />
+
+          <a href="#demo" className="btn btn--primary btn--sm navbar-cta">
+            {t.requestDemo}
+          </a>
+        </div>
 
         <button
           type="button"

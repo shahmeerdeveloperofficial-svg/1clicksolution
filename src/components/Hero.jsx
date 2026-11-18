@@ -188,7 +188,10 @@ export function DeviceMockup({ onOpenVideoModal }) {
   )
 }
 
-export default function Hero({ onOpenVideoModal }) {
+import { translations } from '../data/translations.js'
+
+export default function Hero({ lang = 'en', onOpenVideoModal }) {
+  const t = translations[lang]?.hero || translations.en.hero
   return (
     <section className="hero hero--3d" id="top">
       {/* Ambient Lighting & Tech Grid Glows */}
@@ -205,22 +208,19 @@ export default function Hero({ onOpenVideoModal }) {
           <div className="hero-text-side">
             <p className="hero-pill-badge">
               <span className="pulse-cyan-dot" aria-hidden="true" />
-              School Management Software
+              {t.kicker}
             </p>
 
             <h1 className="hero-title">
-              Your Entire School. <br />
-              <span className="hero-gradient-highlight">One Smart Platform.</span>
+              {t.title1} <br />
+              <span className="hero-gradient-highlight">{t.title2}</span>
             </h1>
 
-            <p className="hero-description">
-              From Admissions to Reports — Manage Students, Staff, Attendance, Fees, Academics
-              and complete school operations with 1 Click Solution.
-            </p>
+            <p className="hero-description">{t.desc}</p>
 
             <div className="hero-cta-buttons">
               <a href="#demo" className="btn btn--primary btn--hero-primary">
-                Request a Live Demo
+                {t.requestDemo}
                 <Icon name="arrowRight" size={18} />
               </a>
 
@@ -232,7 +232,7 @@ export default function Hero({ onOpenVideoModal }) {
                 <span className="hero-play-circle" aria-hidden="true">
                   <Icon name="play" size={16} />
                 </span>
-                Watch Product Overview
+                {t.watchVideo}
               </button>
             </div>
 
@@ -243,8 +243,8 @@ export default function Hero({ onOpenVideoModal }) {
                   <Icon name="layout" size={20} />
                 </span>
                 <div className="trust-text">
-                  <span className="trust-bold">All-In-One</span>
-                  <span className="trust-sub">School System</span>
+                  <span className="trust-bold">{t.badge1Bold}</span>
+                  <span className="trust-sub">{t.badge1Sub}</span>
                 </div>
               </div>
 
@@ -253,8 +253,8 @@ export default function Hero({ onOpenVideoModal }) {
                   <Icon name="layers" size={20} />
                 </span>
                 <div className="trust-text">
-                  <span className="trust-bold">4 Mobile Apps</span>
-                  <span className="trust-sub">Fully Connected</span>
+                  <span className="trust-bold">{t.badge2Bold}</span>
+                  <span className="trust-sub">{t.badge2Sub}</span>
                 </div>
               </div>
 
@@ -263,8 +263,8 @@ export default function Hero({ onOpenVideoModal }) {
                   <Icon name="shield" size={20} />
                 </span>
                 <div className="trust-text">
-                  <span className="trust-bold">Trusted by</span>
-                  <span className="trust-sub">Institutions</span>
+                  <span className="trust-bold">{t.badge3Bold}</span>
+                  <span className="trust-sub">{t.badge3Sub}</span>
                 </div>
               </div>
             </div>

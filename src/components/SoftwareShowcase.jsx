@@ -8,6 +8,8 @@ import gEnrollment from '../assets/screens/g-enrollment.webp'
 import gStaff from '../assets/screens/g-staff.webp'
 import gReports from '../assets/screens/g-reports.webp'
 import gCalendar from '../assets/screens/g-calendar.webp'
+import realFeeRevise from '../assets/screens/real-fee-revise.jpg'
+import { translations } from '../data/translations.js'
 
 const showcaseModules = [
   {
@@ -60,8 +62,8 @@ const showcaseModules = [
     label: 'Fee Collection',
     icon: 'wallet',
     title: 'Fee Structure & Voucher Billing',
-    desc: 'Automate monthly tuition vouchers, manage discounts, record counter or bank deposits, and track pending ledgers.',
-    image: gFees,
+    desc: 'Live Fee Revise interface at http://127.0.0.1:8001/admin/account/studentfee. Generate tuition vouchers, manage discounts, and track pending ledgers.',
+    image: realFeeRevise,
     badge: 'Finance & Accounts',
     stats: [
       { label: 'Total Billed', value: 'Rs. 1.2M' },
@@ -117,8 +119,9 @@ const showcaseModules = [
   },
 ]
 
-export default function SoftwareShowcase({ activeModuleId, onSelectModule }) {
+export default function SoftwareShowcase({ lang = 'en', activeModuleId, onSelectModule }) {
   const [selectedId, setSelectedId] = useState('dashboard')
+  const t = translations[lang]?.solution || translations.en.solution
 
   // Support external control via props
   const currentId = activeModuleId || selectedId
@@ -137,12 +140,9 @@ export default function SoftwareShowcase({ activeModuleId, onSelectModule }) {
         <div className="solution-grid">
           {/* Left Column: Heading & Value Points */}
           <Reveal className="solution-copy">
-            <span className="section-kicker">Our Solution</span>
-            <h2>Complete School Management in One Platform</h2>
-            <p className="solution-lead">
-              A powerful and easy-to-use School Management System designed to simplify administrative,
-              academic, and financial operations for modern educational institutions.
-            </p>
+            <span className="section-kicker">{t.kicker}</span>
+            <h2>{t.title}</h2>
+            <p className="solution-lead">{t.desc}</p>
 
             {/* 2x2 Feature Checkmarks */}
             <div className="solution-features-grid">
@@ -150,38 +150,38 @@ export default function SoftwareShowcase({ activeModuleId, onSelectModule }) {
                 <span className="feature-check" aria-hidden="true">
                   <Icon name="checkCircle" size={20} />
                 </span>
-                <span>All-in-One School ERP</span>
+                <span>{t.feat1}</span>
               </div>
 
               <div className="solution-feature-item">
                 <span className="feature-check" aria-hidden="true">
                   <Icon name="checkCircle" size={20} />
                 </span>
-                <span>Secure &amp; Reliable</span>
+                <span>{t.feat2}</span>
               </div>
 
               <div className="solution-feature-item">
                 <span className="feature-check" aria-hidden="true">
                   <Icon name="checkCircle" size={20} />
                 </span>
-                <span>Web + Mobile Access</span>
+                <span>{t.feat3}</span>
               </div>
 
               <div className="solution-feature-item">
                 <span className="feature-check" aria-hidden="true">
                   <Icon name="checkCircle" size={20} />
                 </span>
-                <span>User-Friendly Interface</span>
+                <span>{t.feat4}</span>
               </div>
             </div>
 
             <div className="solution-cta-row">
               <a href="#modules" className="btn btn--primary">
-                Explore All Modules
+                {t.btnExplore}
                 <Icon name="arrowRight" size={18} />
               </a>
               <a href="#demo" className="btn btn--secondary">
-                Request a Live Demo
+                {t.btnDemo}
               </a>
             </div>
           </Reveal>
