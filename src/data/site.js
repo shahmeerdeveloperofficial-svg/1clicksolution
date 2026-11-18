@@ -31,10 +31,11 @@ export const site = {
 }
 
 export const nav = [
-  { label: 'Modules', href: '#modules' },
+  { label: 'Overview', href: '#overview' },
+  { label: 'Modules', href: '#solution' },
+  { label: 'How It Works', href: '#workflow' },
   { label: 'Mobile Apps', href: '#mobile-apps' },
   { label: 'Screenshots', href: '#screenshots' },
-  { label: 'Why 1 Click', href: '#why' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Contact', href: '#contact' },
 ]

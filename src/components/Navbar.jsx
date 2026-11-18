@@ -37,7 +37,7 @@ export default function Navbar() {
     <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
       <div className="container navbar-inner">
         <a href="#top" className="navbar-brand" aria-label="1 Click Solution home">
-          <Logo />
+          <Logo light />
         </a>
 
         <nav aria-label="Primary" className={`navbar-links${open ? ' is-open' : ''}`} id="primary-nav">
@@ -47,12 +47,12 @@ export default function Navbar() {
             </a>
           ))}
           <a href="#demo" className="btn btn--primary btn--sm navbar-cta-mobile" onClick={() => setOpen(false)}>
-            Request a Demo
+            Request Demo &rarr;
           </a>
         </nav>
 
         <a href="#demo" className="btn btn--primary btn--sm navbar-cta">
-          Request a Demo
+          Request Demo &rarr;
         </a>
 
         <button
