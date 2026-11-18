@@ -17,9 +17,6 @@ export const videoScenes = [
     title: 'Your Entire School. One Smart Platform.',
     subtitle: 'Welcome to 1 Click Solution — The unified administrative school ERP.',
     image: realCmsFull,
-    cameraAngle: 'perspective-intro',
-    showCursor: false,
-    cursorTarget: null,
     highlight: 'Real-time School KPI Dashboard',
   },
   {
@@ -31,11 +28,6 @@ export const videoScenes = [
     title: 'Intuitive Navigation & Instant Access',
     subtitle: 'Streamlined sidebar connecting Admissions, Staff, Attendance, and Accounts.',
     image: realCmsFull,
-    cameraAngle: 'zoom-sidebar',
-    showCursor: true,
-    cursorX: '12%',
-    cursorY: '38%',
-    clickAction: 'Attendance Management',
     highlight: 'One-click Department Switcher',
   },
   {
@@ -47,11 +39,6 @@ export const videoScenes = [
     title: 'Manage Attendance with Ease.',
     subtitle: 'One-tap daily student and staff attendance with automated SMS alerts to parents.',
     image: gAttendance,
-    cameraAngle: 'zoom-attendance',
-    showCursor: true,
-    cursorX: '48%',
-    cursorY: '34%',
-    clickAction: 'Mark Present & Notify',
     highlight: 'Automated Absentee Parent SMS',
   },
   {
@@ -63,11 +50,6 @@ export const videoScenes = [
     title: 'Simplify Fee Collection & Records.',
     subtitle: 'Live Fee Revise module at http://127.0.0.1:8001/admin/account/studentfee with dynamic criteria.',
     image: realFeeRevise,
-    cameraAngle: 'zoom-fees',
-    showCursor: true,
-    cursorX: '32%',
-    cursorY: '52%',
-    clickAction: 'Select Main Campus & Revise',
     highlight: 'Multi-campus Vouchers & Ledgers',
   },
   {
@@ -79,9 +61,6 @@ export const videoScenes = [
     title: 'Turn School Data into Useful Insights.',
     subtitle: 'Export institutional balance sheets, student transcripts, and fee recovery audits.',
     image: gReports,
-    cameraAngle: 'zoom-reports',
-    showCursor: false,
-    cursorTarget: null,
     highlight: 'Excel, PDF & Printable Transcripts',
   },
   {
@@ -93,9 +72,6 @@ export const videoScenes = [
     title: 'One Connected Platform for Your Institution.',
     subtitle: 'Central CMS seamlessly synchronized with Parent, Student, Teacher, and Chairman Apps.',
     image: gDashboard,
-    cameraAngle: 'mobile-ecosystem',
-    showCursor: false,
-    cursorTarget: null,
     highlight: '4 Dedicated Real-time Mobile Apps',
   },
   {
@@ -107,22 +83,19 @@ export const videoScenes = [
     title: '1 Click Solution — Complete School Management.',
     subtitle: 'Request a live demonstration tailored to your school or academy.',
     image: realCmsFull,
-    cameraAngle: 'branding-outro',
-    showCursor: false,
-    cursorTarget: null,
     highlight: 'Empower Your School Today',
   },
 ]
 
 export default function CinematicVideoPlayer({ onExpandModal, onSelectDemo }) {
   const [isPlaying, setIsPlaying] = useState(false)
-  const [currentTime, setCurrentTime] = useState(0) // 0 to 45
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(45)
   const [isMuted, setIsMuted] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
-  const playerRef = useRef(null)
+  const videoRef = useRef(null)
 
-  const TOTAL_DURATION = 45 // 45 seconds
+  const TOTAL_DURATION = 45
 
   // Active scene based on currentTime
   const currentSceneIdx = videoScenes.findIndex(
@@ -130,71 +103,112 @@ export default function CinematicVideoPlayer({ onExpandModal, onSelectDemo }) {
   )
   const activeScene = currentSceneIdx !== -1 ? videoScenes[currentSceneIdx] : videoScenes[videoScenes.length - 1]
 
-  // Playback timer
-  useEffect(() => {
-    if (!isPlaying) return
-
-    const timer = setInterval(() => {
-      setCurrentTime((prev) => {
-        if (prev >= TOTAL_DURATION) {
-          setIsPlaying(false)
-          return TOTAL_DURATION
-        }
-        return Math.min(TOTAL_DURATION, prev + 0.1)
-      })
-    }, 100)
-
-    return () => clearInterval(timer)
-  }, [isPlaying])
-
   const togglePlay = (e) => {
     if (e) e.stopPropagation()
+    const vid = videoRef.current
     if (!hasStarted) setHasStarted(true)
-    if (currentTime >= TOTAL_DURATION) {
-      setCurrentTime(0)
-      setIsPlaying(true)
+
+    if (vid) {
+      if (vid.paused) {
+        vid.play().then(() => setIsPlaying(true)).catch(() => {})
+      } else {
+        vid.pause()
+        setIsPlaying(false)
+      }
     } else {
       setIsPlaying(!isPlaying)
+    }
+  }
+
+  const handleTimeUpdate = () => {
+    const vid = videoRef.current
+    if (vid) {
+      setCurrentTime(vid.currentTime)
+      if (vid.duration && !isNaN(vid.duration)) {
+        setDuration(vid.duration)
+      }
     }
   }
 
   const handleSeek = (e) => {
     e.stopPropagation()
     const rect = e.currentTarget.getBoundingClientRect()
-    const clickX = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
-    setCurrentTime(clickX * TOTAL_DURATION)
+    const clickRatio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
+    const targetTime = clickRatio * (duration || TOTAL_DURATION)
+
+    const vid = videoRef.current
+    if (vid) {
+      vid.currentTime = targetTime
+      if (vid.paused) {
+        vid.play().then(() => setIsPlaying(true)).catch(() => {})
+      }
+    } else {
+      setCurrentTime(targetTime)
+    }
     if (!hasStarted) setHasStarted(true)
-    setIsPlaying(true)
   }
 
   const jumpToScene = (scene, e) => {
     if (e) e.stopPropagation()
-    setCurrentTime(scene.start)
+    const vid = videoRef.current
+    if (vid) {
+      vid.currentTime = scene.start
+      if (vid.paused) {
+        vid.play().then(() => setIsPlaying(true)).catch(() => {})
+      }
+    } else {
+      setCurrentTime(scene.start)
+    }
     if (!hasStarted) setHasStarted(true)
     setIsPlaying(true)
   }
 
-  const progressPercent = (currentTime / TOTAL_DURATION) * 100
+  const toggleMute = (e) => {
+    if (e) e.stopPropagation()
+    const vid = videoRef.current
+    if (vid) {
+      vid.muted = !vid.muted
+      setIsMuted(vid.muted)
+    } else {
+      setIsMuted(!isMuted)
+    }
+  }
+
+  const progressPercent = ((currentTime / (duration || TOTAL_DURATION)) * 100) || 0
 
   return (
     <div
-      ref={playerRef}
       className={`cinematic-player-container${isPlaying ? ' is-playing' : ''}${hasStarted ? ' has-started' : ''}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* 16:9 Screen Display */}
       <div
         className="cinematic-screen-stage"
         onClick={togglePlay}
         role="region"
-        aria-label="3D Cinematic Product Video Player"
+        aria-label="3D Cinematic Product Video Player (1920x1080 MP4)"
       >
-        {/* Initial Video Poster when not started */}
+        {/* Real Playable HTML5 MP4 Video */}
+        <video
+          ref={videoRef}
+          src="/video/1click-product-walkthrough.mp4"
+          poster="/video/poster.jpg"
+          preload="metadata"
+          playsInline
+          className="actual-html5-video"
+          onTimeUpdate={handleTimeUpdate}
+          onPlay={() => {
+            setIsPlaying(true)
+            setHasStarted(true)
+          }}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => setIsPlaying(false)}
+        />
+
+        {/* Initial Overlay Poster if video hasn't been triggered */}
         {!hasStarted && (
           <div className="player-poster-view">
             <img
-              src={realCmsFull}
+              src="/video/poster.jpg"
               alt="1 Click Solution 3D Software Dashboard Preview"
               className="poster-bg-img"
             />
@@ -206,7 +220,7 @@ export default function CinematicVideoPlayer({ onExpandModal, onSelectDemo }) {
                 type="button"
                 className="poster-play-btn"
                 onClick={togglePlay}
-                aria-label="Start 3D Cinematic Product Walkthrough"
+                aria-label="Play 1920x1080 MP4 Product Walkthrough Video"
               >
                 <Icon name="play" size={28} />
               </button>
@@ -214,11 +228,11 @@ export default function CinematicVideoPlayer({ onExpandModal, onSelectDemo }) {
 
             <div className="poster-top-pill">
               <span className="poster-rec-dot" />
-              <span>3D Product Walkthrough • 45s</span>
+              <span>Full HD 1080p MP4 • 45s</span>
             </div>
 
             <div className="poster-bottom-caption">
-              <span className="poster-tag">Real CMS Workflow</span>
+              <span className="poster-tag">Genuine CMS Video Walkthrough</span>
               <h3>See 1 Click Solution in Action (45s Video)</h3>
               <p>Watch Attendance marking, Fee Revise, and Mobile App synchronization.</p>
             </div>
@@ -227,96 +241,7 @@ export default function CinematicVideoPlayer({ onExpandModal, onSelectDemo }) {
           </div>
         )}
 
-        {/* Live 3D Cinematic Scene Animation Stage */}
-        {hasStarted && (
-          <div className={`scene-viewport camera-${activeScene.cameraAngle}`}>
-            {/* Background ambient lighting */}
-            <div className="scene-ambient-lighting" aria-hidden="true">
-              <span className="scene-light-beam light-cyan" />
-              <span className="scene-light-beam light-purple" />
-            </div>
-
-            {/* 3D Device & Screen Presentation */}
-            <div className="scene-3d-stage">
-              {/* Laptop frame */}
-              <div className="cinematic-laptop-chassis">
-                <div className="cinematic-laptop-lid">
-                  <div className="cinematic-screen-bezel">
-                    {/* Live Screen Image based on active scene */}
-                    <img
-                      key={activeScene.id}
-                      src={activeScene.image}
-                      alt={activeScene.title}
-                      className="cinematic-active-screen"
-                    />
-
-                    {/* Animated Mouse Cursor navigating real CMS */}
-                    {activeScene.showCursor && (
-                      <div
-                        className="animated-screen-cursor"
-                        style={{
-                          left: activeScene.cursorX,
-                          top: activeScene.cursorY,
-                        }}
-                      >
-                        <div className="cursor-pointer-icon">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="#38bdf8" stroke="#000" strokeWidth="1.5">
-                            <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
-                          </svg>
-                        </div>
-                        <div className="cursor-click-ripple" />
-                        <span className="cursor-action-bubble">{activeScene.clickAction}</span>
-                      </div>
-                    )}
-
-                    {/* Dynamic Text Overlay in Scene */}
-                    <div className="scene-text-overlay">
-                      <div className="scene-badge-pill">
-                        Scene {activeScene.id} of 7 • {activeScene.highlight}
-                      </div>
-                      <h4 className="scene-main-heading">{activeScene.title}</h4>
-                      <p className="scene-sub-heading">{activeScene.subtitle}</p>
-                    </div>
-
-                    {/* Final Scene 7 CTA Button */}
-                    {activeScene.id === 7 && (
-                      <div className="scene-final-cta-wrap">
-                        <a
-                          href="#demo"
-                          className="btn btn--primary btn--lg"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            if (onSelectDemo) onSelectDemo()
-                          }}
-                        >
-                          Request a Live Demo
-                          <Icon name="arrowRight" size={18} />
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="cinematic-laptop-base" />
-              </div>
-
-              {/* Side Floating Mobile Preview in Scene 6 */}
-              {activeScene.id === 6 && (
-                <div className="scene-floating-phone">
-                  <div className="mini-phone-body">
-                    <span className="mini-phone-notch" />
-                    <div className="mini-phone-screen">
-                      <span className="mini-sync-pulse" />
-                      <div className="mini-app-name">Parent &amp; Teacher Apps</div>
-                      <div className="mini-app-stat">Attendance Synced • 100%</div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Video Player Floating Header */}
+        {/* Video Player Floating Top Bar */}
         {hasStarted && (
           <div className="player-top-bar" onClick={(e) => e.stopPropagation()}>
             <div className="player-info-tag">
@@ -325,7 +250,7 @@ export default function CinematicVideoPlayer({ onExpandModal, onSelectDemo }) {
               <span className="player-scene-tag">{activeScene.tabName}</span>
             </div>
             <div className="player-badges">
-              <span className="badge-quality">1080p Full HD</span>
+              <span className="badge-quality">1080p Full HD MP4</span>
               <button
                 type="button"
                 className="btn-expand-theater"
@@ -341,7 +266,7 @@ export default function CinematicVideoPlayer({ onExpandModal, onSelectDemo }) {
           </div>
         )}
 
-        {/* Play/Pause Click Overlay Indicator */}
+        {/* Paused Overlay Indicator */}
         {hasStarted && !isPlaying && (
           <div className="player-paused-scrim">
             <button
@@ -386,7 +311,7 @@ export default function CinematicVideoPlayer({ onExpandModal, onSelectDemo }) {
                 <button
                   type="button"
                   className="ctrl-action-btn"
-                  onClick={() => setIsMuted(!isMuted)}
+                  onClick={toggleMute}
                   aria-label={isMuted ? 'Unmute' : 'Mute'}
                 >
                   <Icon name={isMuted ? 'volumeX' : 'volume2'} size={18} />
@@ -411,9 +336,13 @@ export default function CinematicVideoPlayer({ onExpandModal, onSelectDemo }) {
                 <button
                   type="button"
                   className="ctrl-replay-btn"
-                  onClick={() => {
-                    setCurrentTime(0)
-                    setIsPlaying(true)
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    const vid = videoRef.current
+                    if (vid) {
+                      vid.currentTime = 0
+                      vid.play().then(() => setIsPlaying(true)).catch(() => {})
+                    }
                   }}
                   title="Replay from start"
                 >
@@ -423,7 +352,8 @@ export default function CinematicVideoPlayer({ onExpandModal, onSelectDemo }) {
                 <button
                   type="button"
                   className="ctrl-theater-btn"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation()
                     if (onExpandModal) onExpandModal()
                   }}
                   title="Full Presentation Modal"

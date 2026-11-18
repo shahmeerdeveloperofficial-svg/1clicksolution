@@ -4642,7 +4642,8 @@ section[id] {
   justify-content: center;
 }
 
-.video-stage-img {
+.video-stage-img,
+.video-stage-mp4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -5108,6 +5109,14 @@ section[id] {
   cursor: pointer;
   perspective: 1400px;
   user-select: none;
+}
+
+.actual-html5-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #000;
 }
 
 /* Initial Poster View */
@@ -5825,4 +5834,39 @@ section[id] {
 
 .lang-ur .hero-title, .lang-ar .hero-title {
   line-height: 1.35;
+}
+
+/* Mobile Video Player Optimizations */
+@media (max-width: 600px) {
+  .player-top-bar {
+    top: 6px;
+    left: 8px;
+    right: 8px;
+  }
+  .player-info-tag {
+    padding: 3px 8px;
+    font-size: 0.68rem;
+  }
+  .player-scene-tag {
+    display: none;
+  }
+  .badge-quality {
+    display: none;
+  }
+  .ctrl-replay-btn {
+    display: none;
+  }
+  .controls-button-row {
+    gap: 8px;
+  }
+  .timestamp-counter {
+    font-size: 0.7rem;
+  }
+  .video-scenes-nav {
+    gap: 4px;
+  }
+  .scene-nav-chip {
+    padding: 4px 8px;
+    font-size: 0.68rem;
+  }
 }

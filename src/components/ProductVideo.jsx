@@ -92,18 +92,14 @@ export function ProductVideoModal({ isOpen, onClose, onSelectDemo }) {
         {/* Video Stage Display */}
         <div className="video-modal-stage">
           <div className="video-stage-screen">
-            <img
-              src={current.image}
-              alt={current.title}
-              className="video-stage-img"
+            <video
+              src="/video/1click-product-walkthrough.mp4"
+              controls
+              autoPlay
+              playsInline
+              poster="/video/poster.jpg"
+              className="video-stage-mp4"
             />
-            <div className="video-stage-overlay">
-              <div className="video-stage-badge">
-                Scene {current.id} of 7 • {current.highlight}
-              </div>
-              <h4>{current.title}</h4>
-              <p>{current.subtitle}</p>
-            </div>
           </div>
 
           {/* Interactive Scene Side Panel */}
